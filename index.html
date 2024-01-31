@@ -7,16 +7,25 @@
   <style>
     @import url(https://fonts.googleapis.com/css?family=Shadows+Into+Light);
 
-    @-webkit-keyframes throb{
-      0%{
+    @-webkit-keyframes throb {
+      0% {
         -webkit-transform: scale(1);
       }
-      35%{
+      35% {
         -webkit-transform: scale(1.2);
       }
-      85%{
+      85% {
         -webkit-transform: scale(1);
       }		
+    }
+
+    @keyframes heartbeat {
+      0%, 100% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.2);
+      }
     }
 
     html {
@@ -45,6 +54,10 @@
       -webkit-animation: throb 0.5s infinite;
       animation: throb 0.5s infinite;
       animation-delay: 0.8s;
+    }
+
+    div.heartbeat {
+      animation: heartbeat 1s infinite;
     }
 
     input[type="checkbox"] {
@@ -129,7 +142,7 @@
 </head>
 <body>
   <form>
-    <div class="wrapper">
+    <div class="wrapper" id="shapeContainer">
       <input type="checkbox" id="ck1" onClick="check()"/>
       <label for="ck1">I</label>
       <input type="checkbox" id="ck2" onClick="check()"/>
@@ -143,16 +156,22 @@
   <script>
     function check() {
       if (document.forms[0].elements[0].checked == true && document.forms[0].elements[1].checked == true && document.forms[0].elements[2].checked == true) {
-        if (!$('.wrapper').hasClass('throb')) {
-          $('.wrapper').addClass('throb');
+        if (!$('#shapeContainer').hasClass('throb')) {
+          $('#shapeContainer').addClass('throb');
+          setTimeout(() => {
+            $('#shapeContainer').removeClass('throb');
+            $('#shapeContainer').addClass('heartbeat');
+          }, 1000);
         } 
       } else {
-        if ($('.wrapper').hasClass('throb')) {
-          $('.wrapper').removeClass('throb');
+        if ($('#shapeContainer').hasClass('throb')) {
+          $('#shapeContainer').removeClass('throb');
+        }
+        if ($('#shapeContainer').hasClass('heartbeat')) {
+          $('#shapeContainer').removeClass('heartbeat');
         }
       }
     }
   </script>
 </body>
 </html>
-
